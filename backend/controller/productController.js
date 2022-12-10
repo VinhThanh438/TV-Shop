@@ -39,8 +39,7 @@ module.exports = {
 
     addProduct: async (req, res) => {
         try {
-            query =
-                'insert into product (idproduct, nameproduct, priceproduct, condproduct) values(?, ?, ?, ?)';
+            query = 'insert into product (idproduct, nameproduct, priceproduct, condproduct) values(?, ?, ?, ?)';
             const { nameproduct, priceproduct, condproduct } = req.body;
             let createId = () => Math.floor(Math.random() * 9999) + 1000;
             let productId = createId();
@@ -48,12 +47,7 @@ module.exports = {
                 if (id == createId()) productId = createId();
             });
             idData('add', 'product', productId);
-            await pool.execute(query, [
-                productId,
-                nameproduct,
-                priceproduct,
-                condproduct,
-            ]);
+            await pool.execute(query, [productId, nameproduct, priceproduct, condproduct]);
             return res.status(200).json({
                 message: 'Product was successfully added!',
             });
@@ -67,16 +61,10 @@ module.exports = {
 
     editProduct: async (req, res) => {
         try {
-            query =
-                'update product set `nameproduct` = ?, `priceproduct` = ?, `condproduct` = ? where idproduct = ?;';
+            query = 'update product set `nameproduct` = ?, `priceproduct` = ?, `condproduct` = ? where idproduct = ?;';
             const productId = req.params.id;
             const { nameproduct, priceproduct, condproduct } = req.body;
-            await pool.execute(query, [
-                nameproduct,
-                priceproduct,
-                condproduct,
-                productId,
-            ]);
+            await pool.execute(query, [nameproduct, priceproduct, condproduct, productId]);
             return res.status(200).json({
                 message: 'Product was updated!',
             });
